@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace EvenueApi.Models
 {
-    public class ApplicationContext : DbContext
+    public class DatabaseContext : DbContext
     {
         public DbSet<Organizer> Organizers { get; set; }
+        public DbSet<DbEvent> Events { get; set; }
 
-        public ApplicationContext()
+        public DatabaseContext()
         {
             Database.EnsureCreated();
         }
@@ -20,9 +21,18 @@ namespace EvenueApi.Models
                 new MySqlServerVersion(new Version(5, 7, 21))
                 );
 
+        // ORGANIZERS ORGANIZERS ORGANIZERS ORGANIZERS ORGANIZERS ORGANIZERS
+
         public List<Organizer> GetOrganizers()
         {
             return Organizers.ToList();
+        }
+
+        // EVENTS EVENTS EVENTS EVENTS EVENTS EVENTS
+
+        public List<DbEvent> GetEvents()
+        {
+            return Events.ToList();
         }
     }
 }

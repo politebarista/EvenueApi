@@ -7,21 +7,13 @@ namespace EvenueApi.Controllers
     [ApiController]
     public class OrganizersController : ControllerBase
     {
-        ApplicationContext context = new ApplicationContext();
+        DatabaseContext context = new DatabaseContext();
 
-        [Route("[controller]")]
+        [Route("getOrganizers")]
         [HttpGet]
-        public List<Organizer> Get()
+        public List<Organizer> GetOrganizers()
         {
-            var some = context.GetOrganizers();
-            return some;
-        }
-
-        [Route("stop")]
-        [HttpGet]
-        public string Stop()
-        {
-            return "stop";
+            return context.GetOrganizers();
         }
     }
 }
