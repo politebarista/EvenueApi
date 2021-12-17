@@ -10,8 +10,8 @@ namespace EvenueApi.Models
         public string ImageUrl { get; set; }
         public double OldPrice { get; set; }
         public double Price { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public EventDateTime StartDate { get; set; }
+        public EventDateTime EndDate { get; set; }
         public Organizer Organizer { get; set; }
 
         public Event(DbEvent dbEvent, Organizer organizer)
@@ -22,9 +22,10 @@ namespace EvenueApi.Models
             ImageUrl = dbEvent.ImageUrl;
             OldPrice = dbEvent.OldPrice;
             Price = dbEvent.Price;
-            StartDate = dbEvent.StartDate;
-            EndDate = dbEvent.EndDate;
+            StartDate = new EventDateTime(dbEvent.StartDate);
+            EndDate = new EventDateTime(dbEvent.EndDate);
             Organizer = organizer;
         }
+
     }
 }
