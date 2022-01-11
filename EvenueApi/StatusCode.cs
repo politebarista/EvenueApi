@@ -4,5 +4,7 @@
     {
         public static string UserDontExist { get => "601"; }
         public static string IncorrectPassword { get => "602"; }
+        public static string UserAlreadyExist { get => "603"; }
+        public static string ErrorWhileCreatingUser { get => "604"; }
     }
 }

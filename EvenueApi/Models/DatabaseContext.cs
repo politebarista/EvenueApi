@@ -42,5 +42,19 @@ namespace EvenueApi.Models
         {
             return Users.ToList();
         }
+
+        public bool AddUser(User user)
+        {
+            try
+            {
+                Users.Add(user);
+                SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

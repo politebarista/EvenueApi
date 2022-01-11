@@ -8,6 +8,7 @@ namespace EvenueApi.Controllers
     public class UsersController
     {
         DatabaseContext context = new DatabaseContext();
+
         [Route("loginUser")]
         [HttpPost]
         public string LoginUser(string email, string password)
@@ -31,6 +32,30 @@ namespace EvenueApi.Controllers
             else
             {
                 return StatusCode.UserDontExist;
+            }
+        }
+
+        [Route("registerUser")]
+        [HttpPost]
+        public string RegisterUser(string id, string lastName, string firstName, string email, string phoneNumber, string password)
+        {
+            List<User> users = context.GetUsers();
+
+            User? user = users.Find(user => user.Email == email);
+            if (user != null) { 
+                return StatusCode.UserAlreadyExist; 
+            }
+            else
+            {
+                bool userRegistered = context.AddUser(new User(id, lastName, firstName, email, phoneNumber, password));
+                if (userRegistered)
+                {
+                    return id;
+                }
+                else
+                {
+                    return StatusCode.ErrorWhileCreatingUser;
+                }
             }
         }
     }
