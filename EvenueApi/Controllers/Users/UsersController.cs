@@ -1,4 +1,6 @@
-﻿using EvenueApi.Models;
+﻿using EvenueApi.Controllers.Users;
+using EvenueApi.Models;
+using Json.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,28 +13,31 @@ namespace EvenueApi.Controllers
 
         [Route("loginUser")]
         [HttpPost]
-        public string LoginUser(string email, string password)
+        public string LoginUser([FromBody]LoginUserRequestBody body) // добавить модельку для body и аннотацию [FromBody] (сваггер передает через params не через body)
         {
             List<User> users = context.GetUsers();
 
-            User? user = users.Find(user => user.Email == email);
+            User? user = users.Find(user => user.Email == body.Email);
 
+            string response;
             if (user != null)
             {
-                if (user.Password == password)
+                if (user.Password == body.Password)
                 {
-                    return user.Id;
+                    response = user.Id;
                 }
                 else
                 {
-                    return StatusCode.IncorrectPassword;
+                    response = StatusCode.IncorrectPassword;
                 }
-                
-            } 
+
+            }
             else
             {
-                return StatusCode.UserDontExist;
+                response = StatusCode.UserDontExist;
             }
+
+            return JsonNet.Serialize(response);
         }
 
         [Route("registerUser")]
@@ -42,8 +47,9 @@ namespace EvenueApi.Controllers
             List<User> users = context.GetUsers();
 
             User? user = users.Find(user => user.Email == email);
-            if (user != null) { 
-                return StatusCode.UserAlreadyExist; 
+            if (user != null)
+            {
+                return StatusCode.UserAlreadyExist;
             }
             else
             {
