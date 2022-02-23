@@ -13,7 +13,7 @@ namespace EvenueApi.Controllers
 
         [Route("loginUser")]
         [HttpPost]
-        public string LoginUser([FromBody]LoginUserRequestBody body) // добавить модельку для body и аннотацию [FromBody] (сваггер передает через params не через body)
+        public string LoginUser([FromBody]LoginUserRequestBody body)
         {
             List<User> users = context.GetUsers();
 

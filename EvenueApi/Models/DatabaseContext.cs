@@ -9,6 +9,7 @@ namespace EvenueApi.Models
     public class DatabaseContext : DbContext
     {
         public DbSet<Organizer> Organizers { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<DbEvent> Events { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -27,6 +28,13 @@ namespace EvenueApi.Models
         public List<Organizer> GetOrganizers()
         {
             return Organizers.ToList();
+        }
+
+        // CITIES CITIES CITIES CITIES CITIES CITIES
+        
+        public List<City> GetCities()
+        {
+            return Cities.ToList();
         }
 
         // EVENTS EVENTS EVENTS EVENTS EVENTS EVENTS
