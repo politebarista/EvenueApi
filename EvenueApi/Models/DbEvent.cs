@@ -13,5 +13,6 @@ namespace EvenueApi.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Organizer { get; set; }
+        public string City { get; set; }
     }
 }

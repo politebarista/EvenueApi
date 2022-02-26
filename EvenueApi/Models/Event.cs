@@ -13,8 +13,9 @@ namespace EvenueApi.Models
         public EventDateTime StartDate { get; set; }
         public EventDateTime EndDate { get; set; }
         public Organizer Organizer { get; set; }
+        public City City { get; set; }
 
-        public Event(DbEvent dbEvent, Organizer organizer)
+        public Event(DbEvent dbEvent, Organizer organizer, City city)
         {
             Id = dbEvent.Id;
             Name = dbEvent.Name;
@@ -25,6 +26,7 @@ namespace EvenueApi.Models
             StartDate = new EventDateTime(dbEvent.StartDate);
             EndDate = new EventDateTime(dbEvent.EndDate);
             Organizer = organizer;
+            City = city;
         }
 
     }
