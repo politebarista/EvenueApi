@@ -2,7 +2,6 @@
 {
     public class GetEventsRequestBody
     {
-        #nullable enable
-        public string? CityId { get; set; }
+        public string CityId { get; set; }
     }
 }

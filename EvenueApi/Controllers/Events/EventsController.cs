@@ -19,7 +19,7 @@ namespace EvenueApi.Controllers
             List<City> cities = context.GetCities();
 
             // I think the algorithm for selecting a city can be optimized
-            List<DbEvent> dbEventsWithCity = body.CityId != null ? dbEvents.FindAll(dbEvent => dbEvent.City == body.CityId) : dbEvents;
+            List<DbEvent> dbEventsWithCity = body.CityId != "Any" ? dbEvents.FindAll(dbEvent => dbEvent.City == body.CityId) : dbEvents;
 
             List<Event> events = new List<Event>();
             foreach (DbEvent dbEvent in dbEventsWithCity)
