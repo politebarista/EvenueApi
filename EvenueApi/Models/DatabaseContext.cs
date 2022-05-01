@@ -11,7 +11,7 @@ namespace EvenueApi.Models
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<DbEvent> Events { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         public DatabaseContext()
         {
@@ -44,18 +44,18 @@ namespace EvenueApi.Models
             return Events.ToList();
         }
 
-        // USERS USERS USERS USERS USERS USERS USERS
+        // CUSTOMERS CUSTOMERS CUSTOMERS CUSTOMERS CUSTOMERS CUSTOMERS
 
-        public List<User> GetUsers()
+        public List<Customer> GetCustomers()
         {
-            return Users.ToList();
+            return Customers.ToList();
         }
 
-        public bool AddUser(User user)
+        public bool AddCustomer(Customer customer)
         {
             try
             {
-                Users.Add(user);
+                Customers.Add(customer);
                 SaveChanges();
                 return true;
             }
