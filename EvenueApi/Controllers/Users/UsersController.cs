@@ -24,20 +24,20 @@ namespace EvenueApi.Controllers
             {
                 if (user.Password == body.Password)
                 {
-                    response = user.Id;
+                    response = JsonNet.Serialize(user);
                 }
                 else
                 {
-                    response = StatusCode.IncorrectPassword;
+                    response = JsonNet.Serialize(StatusCode.IncorrectPassword);
                 }
 
             }
             else
             {
-                response = StatusCode.UserDontExist;
+                response = JsonNet.Serialize(StatusCode.UserDontExist);
             }
 
-            return JsonNet.Serialize(response);
+            return response;
         }
 
         [Route("registerUser")]
