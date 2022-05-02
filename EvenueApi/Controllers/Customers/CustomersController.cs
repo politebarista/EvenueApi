@@ -28,13 +28,13 @@ namespace EvenueApi.Controllers
                 }
                 else
                 {
-                    response = JsonNet.Serialize(StatusCode.IncorrectPassword);
+                    response = JsonNet.Serialize(EvenueStatusCode.IncorrectPassword);
                 }
 
             }
             else
             {
-                response = JsonNet.Serialize(StatusCode.CustomerDontExist);
+                response = JsonNet.Serialize(EvenueStatusCode.CustomerDontExist);
             }
 
             return response;
@@ -49,7 +49,7 @@ namespace EvenueApi.Controllers
             Customer? customer = customers.Find(customer => customer.Email == email);
             if (customer != null)
             {
-                return StatusCode.CustomerAlreadyExist;
+                return EvenueStatusCode.CustomerAlreadyExist;
             }
             else
             {
@@ -60,7 +60,7 @@ namespace EvenueApi.Controllers
                 }
                 else
                 {
-                    return StatusCode.ErrorWhileCreatingCustomer;
+                    return EvenueStatusCode.ErrorWhileCreatingCustomer;
                 }
             }
         }
