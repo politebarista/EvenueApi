@@ -13,18 +13,18 @@ namespace EvenueApi.Controllers
 
         [Route("loginCustomer")]
         [HttpPost]
-        public string LoginCustomer([FromBody]LoginCustomerRequestBody body)
+        public object LoginCustomer([FromBody]LoginCustomerRequestBody body)
         {
             List<Customer> customers = context.GetCustomers();
 
             Customer? customer = customers.Find(customer => customer.Email == body.Email);
 
-            string response;
+            object response;
             if (customer != null)
             {
                 if (customer.Password == body.Password)
                 {
-                    response = JsonNet.Serialize(customer);
+                    response = customer;
                 }
                 else
                 {

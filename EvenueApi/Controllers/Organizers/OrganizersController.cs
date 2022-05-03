@@ -20,18 +20,18 @@ namespace EvenueApi.Controllers
 
         [Route("loginOrganizer")]
         [HttpPost]
-        public string LoginOrganizer([FromBody]LoginOrganizerRequestBody body)
+        public object LoginOrganizer([FromBody]LoginOrganizerRequestBody body)
         {
             List<Organizer> organizers = context.GetOrganizers();
 
             Organizer? organizer = organizers.Find(organizer => organizer.ContactPersonEmail == body.ContactPersonEmail);
 
-            string response;
+            object response;
             if (organizer != null)
             {
                 if (organizer.Password == body.Password)
                 {
-                    response = JsonNet.Serialize(organizer);
+                    response = organizer;
                 }
                 else
                 {
