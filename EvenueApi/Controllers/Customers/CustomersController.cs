@@ -1,9 +1,11 @@
-﻿using EvenueApi.Controllers.Customers;
+﻿using System;
+using EvenueApi.Controllers.Customers;
 using EvenueApi.Models;
 using Json.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
+# nullable enable
 namespace EvenueApi.Controllers
 {
     [ApiController]
@@ -13,7 +15,7 @@ namespace EvenueApi.Controllers
 
         [Route("loginCustomer")]
         [HttpPost]
-        public object LoginCustomer([FromBody]LoginCustomerRequestBody body)
+        public object LoginCustomer([FromBody] LoginCustomerRequestBody body)
         {
             List<Customer> customers = context.GetCustomers();
 
@@ -42,26 +44,26 @@ namespace EvenueApi.Controllers
 
         [Route("registerCustomer")]
         [HttpPost]
-        public string RegisterCustomer(string id, string lastName, string firstName, string email, string phoneNumber, string password)
+        public object RegisterCustomer([FromBody] RegisterCustomerRequestBody body)
         {
             List<Customer> customers = context.GetCustomers();
 
-            Customer? customer = customers.Find(customer => customer.Email == email);
-            if (customer != null)
+            Customer? customerWithSameEmail = customers.Find(customer => customer.Email == body.Email);
+            if (customerWithSameEmail != null)
             {
-                return EvenueStatusCode.CustomerAlreadyExist;
+                return JsonNet.Serialize(EvenueStatusCode.CustomerAlreadyExist);
+            }
+
+            string newCustomerUuid = Guid.NewGuid().ToString();
+            Customer newCustomer = new Customer(newCustomerUuid, body.LastName, body.FirstName, body.Email, body.PhoneNumber, body.Password);
+            bool customerRegistered = context.AddCustomer(newCustomer);
+            if (customerRegistered)
+            {
+                return newCustomer;
             }
             else
             {
-                bool customerRegistered = context.AddCustomer(new Customer(id, lastName, firstName, email, phoneNumber, password));
-                if (customerRegistered)
-                {
-                    return id;
-                }
-                else
-                {
-                    return EvenueStatusCode.ErrorWhileCreatingCustomer;
-                }
+                return JsonNet.Serialize(EvenueStatusCode.ErrorWhileCreatingCustomer);
             }
         }
     }
