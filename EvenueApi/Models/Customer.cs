@@ -8,8 +8,9 @@
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
+        public string FavoritesOrganizers { get; set; }
 
-        public Customer(string id, string lastName, string firstName, string email, string phoneNumber, string password)
+        public Customer(string id, string lastName, string firstName, string email, string phoneNumber, string password, string favoritesOrganizers)
         {
             Id = id;
             LastName = lastName; 
@@ -17,6 +18,7 @@
             Email = email; 
             PhoneNumber = phoneNumber; 
             Password = password;
+            FavoritesOrganizers = favoritesOrganizers;
         }
     }
 }

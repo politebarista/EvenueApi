@@ -55,7 +55,7 @@ namespace EvenueApi.Controllers
             }
 
             string newCustomerUuid = Guid.NewGuid().ToString();
-            Customer newCustomer = new Customer(newCustomerUuid, body.LastName, body.FirstName, body.Email, body.PhoneNumber, body.Password);
+            Customer newCustomer = new Customer(newCustomerUuid, body.LastName, body.FirstName, body.Email, body.PhoneNumber, body.Password, "");
             bool customerRegistered = context.AddCustomer(newCustomer);
             if (customerRegistered)
             {
