@@ -1,5 +1,5 @@
 ﻿using EvenueApi.Controllers.Organizers;
-using EvenueApi.Models;
+using EvenueApi.Core.Models;
 using Json.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

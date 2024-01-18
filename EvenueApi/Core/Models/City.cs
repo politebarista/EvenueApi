@@ -1,4 +1,4 @@
-﻿namespace EvenueApi.Models
+﻿namespace EvenueApi.Core.Models
 {
     public class City
     {

@@ -1,16 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EvenueApi.Core.Models;
+using EvenueApi.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EvenueApi.Models
+namespace EvenueApi
 {
     public class DatabaseContext : DbContext
     {
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<DbEvent> Events { get; set; }
+        public DbSet<LocalDatabaseDtoEvent> Events { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
         public DatabaseContext()
@@ -31,7 +33,7 @@ namespace EvenueApi.Models
         }
 
         // CITIES CITIES CITIES CITIES CITIES CITIES
-        
+
         public List<City> GetCities()
         {
             return Cities.ToList();
@@ -39,7 +41,7 @@ namespace EvenueApi.Models
 
         // EVENTS EVENTS EVENTS EVENTS EVENTS EVENTS
 
-        public List<DbEvent> GetEvents()
+        public List<LocalDatabaseDtoEvent> GetEvents()
         {
             return Events.ToList();
         }

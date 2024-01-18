@@ -2,7 +2,7 @@
 
 namespace EvenueApi.Models
 {
-    public class DbEvent
+    public class LocalDatabaseDtoEvent
     {
         public string Id { get; set; }
         public string Name { get; set; }

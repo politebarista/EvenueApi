@@ -1,3 +1,5 @@
+using EvenueApi.Core.Repositories;
+using EvenueApi.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -11,8 +13,12 @@ namespace EvenueApi
 {
     public class Program
     {
+        public static IEventsRepository EventsRepository;
+
         public static void Main(string[] args)
         {
+            EventsRepository = new LocalDatabaseEventRepository();
+
             CreateHostBuilder(args).Build().Run();
         }
 
