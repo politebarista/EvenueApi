@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EvenueApi.Core.Repositories
 {
-    public interface IEventsRepository
+    internal interface IEventsRepository
     {
         public void CreateEvent(Event Event);
         public void UpdateEvent(Event Event);

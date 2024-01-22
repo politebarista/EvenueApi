@@ -7,13 +7,12 @@ namespace EvenueApi.Controllers
     [ApiController]
     public class CitiesController
     {
-        private DatabaseContext context = new DatabaseContext();
         
         [Route("getCities")]
         [HttpGet]
         public List<City> GetCities()
         {
-            return context.GetCities();
+            return Program.CitiesRepository.GetCities();
         }
     }
 }

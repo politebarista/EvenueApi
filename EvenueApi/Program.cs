@@ -13,11 +13,17 @@ namespace EvenueApi
 {
     public class Program
     {
-        public static IEventsRepository EventsRepository;
+        internal static IEventsRepository EventsRepository;
+        internal static ICustomerRepository CustomersRepository;
+        internal static ICitiesRepository CitiesRepository;
+        internal static IOrganizerRepository OrganizerRepository;
 
         public static void Main(string[] args)
         {
             EventsRepository = new LocalDatabaseEventRepository();
+            CustomersRepository = new LocalDatabaseCustomerRepository();
+            CitiesRepository = new LocalDatabaseCitiesRepository();
+            OrganizerRepository = new LocalDatabaseOrganizerRepository();
 
             CreateHostBuilder(args).Build().Run();
         }

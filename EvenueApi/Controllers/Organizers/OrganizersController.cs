@@ -4,27 +4,24 @@ using Json.Net;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
+#nullable enable
 namespace EvenueApi.Controllers
 {
     [ApiController]
     public class OrganizersController : ControllerBase
     {
-        DatabaseContext context = new DatabaseContext();
-
         [Route("getOrganizers")]
         [HttpGet]
         public List<Organizer> GetOrganizers()
         {
-            return context.GetOrganizers();
+            return Program.OrganizerRepository.GetOrganizers();
         }
 
         [Route("loginOrganizer")]
         [HttpPost]
         public object LoginOrganizer([FromBody]LoginOrganizerRequestBody body)
         {
-            List<Organizer> organizers = context.GetOrganizers();
-
-            Organizer? organizer = organizers.Find(organizer => organizer.ContactPersonEmail == body.ContactPersonEmail);
+            Organizer? organizer = Program.OrganizerRepository.GetOrganizer(body.ContactPersonEmail);
 
             object response;
             if (organizer != null)
