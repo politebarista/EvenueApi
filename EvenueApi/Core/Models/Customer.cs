@@ -1,4 +1,4 @@
-﻿namespace EvenueApi.Models
+﻿namespace EvenueApi.Core.Models
 {
     public class Customer
     {
@@ -13,10 +13,10 @@
         public Customer(string id, string lastName, string firstName, string email, string phoneNumber, string password, string favoritesOrganizers)
         {
             Id = id;
-            LastName = lastName; 
-            FirstName = firstName; 
-            Email = email; 
-            PhoneNumber = phoneNumber; 
+            LastName = lastName;
+            FirstName = firstName;
+            Email = email;
+            PhoneNumber = phoneNumber;
             Password = password;
             FavoritesOrganizers = favoritesOrganizers;
         }

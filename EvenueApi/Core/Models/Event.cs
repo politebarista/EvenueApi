@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EvenueApi.Models
+namespace EvenueApi.Core.Models
 {
     public class Event
     {
@@ -15,19 +15,18 @@ namespace EvenueApi.Models
         public Organizer Organizer { get; set; }
         public City City { get; set; }
 
-        public Event(DbEvent dbEvent, Organizer organizer, City city)
+        public Event(string id, string name, string description, string imageUrl, double oldPrice, double price, DateTime startDateTime, DateTime endDateTime, Organizer organizer, City city)
         {
-            Id = dbEvent.Id;
-            Name = dbEvent.Name;
-            Description = dbEvent.Description;
-            ImageUrl = dbEvent.ImageUrl;
-            OldPrice = dbEvent.OldPrice;
-            Price = dbEvent.Price;
-            StartDate = new EventDateTime(dbEvent.StartDate);
-            EndDate = new EventDateTime(dbEvent.EndDate);
+            Id = id;
+            Name = name;
+            Description = description;
+            ImageUrl = imageUrl;
+            OldPrice = oldPrice;
+            Price = price;
+            StartDate = new EventDateTime(startDateTime);
+            EndDate = new EventDateTime(endDateTime);
             Organizer = organizer;
             City = city;
         }
-
     }
 }

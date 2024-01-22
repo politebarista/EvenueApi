@@ -1,3 +1,5 @@
+using EvenueApi.Core.Repositories;
+using EvenueApi.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -11,8 +13,18 @@ namespace EvenueApi
 {
     public class Program
     {
+        internal static IEventsRepository EventsRepository;
+        internal static ICustomerRepository CustomersRepository;
+        internal static ICitiesRepository CitiesRepository;
+        internal static IOrganizerRepository OrganizerRepository;
+
         public static void Main(string[] args)
         {
+            EventsRepository = new LocalDatabaseEventRepository();
+            CustomersRepository = new LocalDatabaseCustomerRepository();
+            CitiesRepository = new LocalDatabaseCitiesRepository();
+            OrganizerRepository = new LocalDatabaseOrganizerRepository();
+
             CreateHostBuilder(args).Build().Run();
         }
 
