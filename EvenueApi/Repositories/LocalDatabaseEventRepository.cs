@@ -30,15 +30,15 @@ namespace EvenueApi.Repositories
 
         List<Event> IEventsRepository.GetEvents(string cityId)
         {
-            List<LocalDatabaseDtoEvent> dbEvents = context.GetEvents();
+            List<LocalDatabaseEventDto> dbEvents = context.GetEvents();
             List<Organizer> organizers = context.GetOrganizers();
             List<City> cities = context.GetCities();
             
             // I think the algorithm for selecting a city can be optimized
-            List<LocalDatabaseDtoEvent> dbEventsWithCity = cityId != null ? dbEvents.FindAll(dbEvent => dbEvent.City == cityId) : dbEvents;
+            List<LocalDatabaseEventDto> dbEventsWithCity = cityId != null ? dbEvents.FindAll(dbEvent => dbEvent.City == cityId) : dbEvents;
 
             List<Event> events = new List<Event>();
-            foreach (LocalDatabaseDtoEvent dbEvent in dbEventsWithCity)
+            foreach (LocalDatabaseEventDto dbEvent in dbEventsWithCity)
             {
                 Organizer organizer = organizers.Find(organizer => dbEvent.Organizer == organizer.Id);
                 City city = cities.Find(city => dbEvent.City == city.Id);

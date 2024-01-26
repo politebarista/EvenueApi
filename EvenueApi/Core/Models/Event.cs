@@ -14,8 +14,9 @@ namespace EvenueApi.Core.Models
         public EventDateTime EndDate { get; set; }
         public Organizer Organizer { get; set; }
         public City City { get; set; }
+        public int ParticipantsMaxNumber { get; set; }
 
-        public Event(string id, string name, string description, string imageUrl, double oldPrice, double price, DateTime startDateTime, DateTime endDateTime, Organizer organizer, City city)
+        public Event(string id, string name, string description, string imageUrl, double oldPrice, double price, DateTime startDateTime, DateTime endDateTime, Organizer organizer, City city, int participantsMaxNumber)
         {
             Id = id;
             Name = name;
@@ -27,6 +28,7 @@ namespace EvenueApi.Core.Models
             EndDate = new EventDateTime(endDateTime);
             Organizer = organizer;
             City = city;
+            ParticipantsMaxNumber = participantsMaxNumber;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace EvenueApi.Models
 {
-    public class LocalDatabaseDtoEvent
+    public class LocalDatabaseEventDto
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -14,5 +14,6 @@ namespace EvenueApi.Models
         public DateTime EndDate { get; set; }
         public string Organizer { get; set; }
         public string City { get; set; }
+        public int ParticipantsMaxNumber { get; set; }
     }
 }
