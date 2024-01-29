@@ -23,6 +23,8 @@ namespace EvenueApi.Repositories
         
         Customer? ICustomerRepository.GetCustomer(string email)
         {
+            if (email == null) return null;
+
             List<Customer> customers = context.GetCustomers();
 
             Customer? customer = customers.Find(customer => customer.Email == email);

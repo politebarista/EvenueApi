@@ -4,10 +4,10 @@ namespace EvenueApi.Models
 {
     public class LocalDatabaseTicketDto
     {
-        public string Id { get; }
-        public string EventId { get; }
-        public string CustomerEmail { get; }
-        public DateTime PurchaseDate { get; }
+        public string Id { get; set; }
+        public string EventId { get; set; }
+        public string CustomerEmail { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         public LocalDatabaseTicketDto(string id, string eventId, string customerEmail, DateTime purchaseDate)
         {

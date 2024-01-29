@@ -17,5 +17,8 @@
         public static string NoAwaitingPaymentTicket { get => "631"; }
         public static string IncorrectConfirmationPurchaseCode { get => "632"; }
         public static string NoTicketsLeftForEvent { get => "633"; }
+        public static string IncorrectPaymentCardInformation { get => "634"; }
+        public static string IncorrectEventInformation { get => "635"; }
+        public static string IncorrectCustomerInformation { get => "636"; }
     }
 }

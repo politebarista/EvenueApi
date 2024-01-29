@@ -21,19 +21,31 @@ namespace EvenueApi.Core
             CustomerRepository = customerRepository;
         }
 
-
-        // TODO: Add error handling
+        // TODO: change name? Since the method returns the payment ID and says nothing about it
         // TODO: Move customer card data into separate class
+        // TODO: Add card data verification with return of EvenueStatusCode.IncorrectPaymentCardInformation
         // First method to call when buying a ticket. Returns the ID of the pending payment, which is needed to confirm the payment in the <paramref name="ConfirmPurchase"/> method.
-        internal string SendPurchaseConfirmationCode(string cardNumber, string cardExpirationDate, string CVV, string cardHolderName, string eventId, string customerId)
+        internal string SendPurchaseConfirmationCode(string cardNumber, string cardExpirationDate, string CVV, string cardHolderName, string eventId, string customerEmail)
         {
+            Event currentEvent = EventsRepository.GetEvent(eventId);
+            if (currentEvent == null)
+            {
+                return EvenueStatusCode.IncorrectEventInformation;
+            }
+
+            Customer customer = CustomerRepository.GetCustomer(customerEmail);
+            if (customer == null)
+            {
+                return EvenueStatusCode.IncorrectCustomerInformation;
+            }
+
             //
             // Handling card information data & communication with bank
             //
             string confirmationCode = "111111";
 
             string awaitingPaymentTicketId = Guid.NewGuid().ToString();
-            TicketsAwaitingPayment.Add(new AwaitingPaymentTicket(awaitingPaymentTicketId, eventId, confirmationCode, customerId));
+            TicketsAwaitingPayment.Add(new AwaitingPaymentTicket(awaitingPaymentTicketId, eventId, confirmationCode, customer));
 
             return awaitingPaymentTicketId;
         }
@@ -58,8 +70,7 @@ namespace EvenueApi.Core
                 return EvenueStatusCode.NoTicketsLeftForEvent;
             }
 
-            Customer customer = CustomerRepository.GetCustomer(awaitingPaymentTicket.CustomerId);
-            Ticket ticket = new(Guid.NewGuid().ToString(), currentEvent, customer, DateTime.Now);
+            Ticket ticket = new(Guid.NewGuid().ToString(), currentEvent, awaitingPaymentTicket.Customer, DateTime.Now);
             bool isTickedCreatSuccessfully = TicketsRepository.CreateTicket(ticket: ticket);
 
             return null;

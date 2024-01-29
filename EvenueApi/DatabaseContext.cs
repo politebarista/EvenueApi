@@ -7,15 +7,16 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // TODO: move to separate directory called something like "Data"
+// TODO: is it better to return DbSet and not List? Need to check the execution time
 namespace EvenueApi
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Organizer> Organizers { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<LocalDatabaseEventDto> Events { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<LocalDatabaseTicketDto> Tickets { get; set; }
+        private DbSet<Organizer> Organizers { get; set; }
+        private DbSet<City> Cities { get; set; }
+        private DbSet<LocalDatabaseEventDto> Events { get; set; }
+        private DbSet<Customer> Customers { get; set; }
+        private DbSet<LocalDatabaseTicketDto> Tickets { get; set; }
 
         public DatabaseContext()
         {

@@ -5,15 +5,15 @@
         public string Id { get; }
         public string EventId { get; }
         public string ConfirmationCode { get; }
-        public string CustomerId { get; }
+        public Customer Customer { get; }
 
         // TODO: add something like DateTime AddingDateTime to track & handle payment that has been in the queue for too long
-        internal AwaitingPaymentTicket(string id,  string eventId, string confirmationCode, string customerId)
+        internal AwaitingPaymentTicket(string id,  string eventId, string confirmationCode, Customer customer)
         {
             Id = Id;
             EventId = EventId;
             ConfirmationCode = ConfirmationCode;
-            CustomerId = customerId;
+            Customer = customer;
         }
     }
 }

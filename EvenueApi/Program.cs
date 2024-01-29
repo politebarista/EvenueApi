@@ -17,6 +17,7 @@ namespace EvenueApi
         internal static ICustomerRepository CustomersRepository;
         internal static ICitiesRepository CitiesRepository;
         internal static IOrganizerRepository OrganizerRepository;
+        internal static ITicketsRepository TicketsRepository;
 
         public static void Main(string[] args)
         {
@@ -24,6 +25,7 @@ namespace EvenueApi
             CustomersRepository = new LocalDatabaseCustomerRepository();
             CitiesRepository = new LocalDatabaseCitiesRepository();
             OrganizerRepository = new LocalDatabaseOrganizerRepository();
+            TicketsRepository = new LocalDatabaseTicketsRepository(EventsRepository, CustomersRepository);
 
             CreateHostBuilder(args).Build().Run();
         }

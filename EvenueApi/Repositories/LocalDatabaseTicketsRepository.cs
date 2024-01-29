@@ -12,7 +12,7 @@ namespace EvenueApi.Repositories
         private readonly IEventsRepository EventsRepository;
         private readonly ICustomerRepository CustomerRepository;
 
-        LocalDatabaseTicketsRepository(IEventsRepository eventsRepository, ICustomerRepository customerRepository)
+        internal LocalDatabaseTicketsRepository(IEventsRepository eventsRepository, ICustomerRepository customerRepository)
         {
             Context = new DatabaseContext();
             EventsRepository = eventsRepository;
