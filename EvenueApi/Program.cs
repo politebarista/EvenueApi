@@ -1,3 +1,4 @@
+using EvenueApi.Core;
 using EvenueApi.Core.Repositories;
 using EvenueApi.Repositories;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,8 @@ namespace EvenueApi
         internal static IOrganizerRepository OrganizerRepository;
         internal static ITicketsRepository TicketsRepository;
 
+        internal static TicketPurchase TicketPurchase;
+
         public static void Main(string[] args)
         {
             EventsRepository = new LocalDatabaseEventRepository();
@@ -26,6 +29,8 @@ namespace EvenueApi
             CitiesRepository = new LocalDatabaseCitiesRepository();
             OrganizerRepository = new LocalDatabaseOrganizerRepository();
             TicketsRepository = new LocalDatabaseTicketsRepository(EventsRepository, CustomersRepository);
+
+            TicketPurchase = new TicketPurchase(EventsRepository, TicketsRepository, CustomersRepository);
 
             CreateHostBuilder(args).Build().Run();
         }

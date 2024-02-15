@@ -1,6 +1,6 @@
 ﻿namespace EvenueApi.Controllers.Tickets
 {
-    public class SendPurchaseConfirmationCodeRequestBody
+    public class SendPurchaseConfirmationCodeAndGetPaymentIdRequestBody
     {
         public string CardNumber { get; set; }
         public string CardExpirationDate { get; set; }

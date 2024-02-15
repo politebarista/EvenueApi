@@ -10,9 +10,9 @@
         // TODO: add something like DateTime AddingDateTime to track & handle payment that has been in the queue for too long
         internal AwaitingPaymentTicket(string id,  string eventId, string confirmationCode, Customer customer)
         {
-            Id = Id;
-            EventId = EventId;
-            ConfirmationCode = ConfirmationCode;
+            Id = id;
+            EventId = eventId;
+            ConfirmationCode = confirmationCode;
             Customer = customer;
         }
     }

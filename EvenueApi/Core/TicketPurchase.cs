@@ -8,7 +8,7 @@ namespace EvenueApi.Core
 {
     internal class TicketPurchase
     {
-        private readonly List<AwaitingPaymentTicket> TicketsAwaitingPayment = new();
+        private readonly List<AwaitingPaymentTicket> TicketsAwaitingPayment;
 
         private readonly IEventsRepository EventsRepository;
         private readonly ITicketsRepository TicketsRepository;
@@ -16,16 +16,17 @@ namespace EvenueApi.Core
 
         internal TicketPurchase(IEventsRepository eventsRepository, ITicketsRepository ticketsRepository, ICustomerRepository customerRepository)
         {
+            TicketsAwaitingPayment = new();
+
             EventsRepository = eventsRepository;
             TicketsRepository = ticketsRepository;
             CustomerRepository = customerRepository;
         }
 
-        // TODO: change name? Since the method returns the payment ID and says nothing about it
         // TODO: Move customer card data into separate class
         // TODO: Add card data verification with return of EvenueStatusCode.IncorrectPaymentCardInformation
         // First method to call when buying a ticket. Returns the ID of the pending payment, which is needed to confirm the payment in the <paramref name="ConfirmPurchase"/> method.
-        internal string SendPurchaseConfirmationCode(string cardNumber, string cardExpirationDate, string CVV, string cardHolderName, string eventId, string customerEmail)
+        internal string SendPurchaseConfirmationCodeAndGetPaymentId(string cardNumber, string cardExpirationDate, string CVV, string cardHolderName, string eventId, string customerEmail)
         {
             Event currentEvent = EventsRepository.GetEvent(eventId);
             if (currentEvent == null)
@@ -50,15 +51,15 @@ namespace EvenueApi.Core
             return awaitingPaymentTicketId;
         }
 
-        internal string ConfirmPurchase(string AwaitingPaymentTicketId, string ConfirmationCode)
+        internal string ConfirmPurchase(string awaitingPaymentTicketId, string confirmationCode)
         {
-            AwaitingPaymentTicket awaitingPaymentTicket = TicketsAwaitingPayment.Find((ticket) => ticket.Id == AwaitingPaymentTicketId);
+            AwaitingPaymentTicket awaitingPaymentTicket = TicketsAwaitingPayment.Find((ticket) => ticket.Id == awaitingPaymentTicketId);
             if (awaitingPaymentTicket == null)
             {
                 return EvenueStatusCode.NoAwaitingPaymentTicket;
             }
             
-            if (awaitingPaymentTicket.ConfirmationCode != ConfirmationCode)
+            if (awaitingPaymentTicket.ConfirmationCode != confirmationCode)
             {
                 return EvenueStatusCode.IncorrectConfirmationPurchaseCode;
             }

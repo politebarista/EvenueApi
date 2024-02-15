@@ -7,13 +7,20 @@ namespace EvenueApi.Controllers.Tickets
     [ApiController]
     public class TicketsController
     {
-        readonly private TicketPurchase TicketPurchase = new TicketPurchase(Program.EventsRepository, Program.TicketsRepository, Program.CustomersRepository);
+        private readonly TicketPurchase TicketPurchase = Program.TicketPurchase;
 
-        [Route("sendPurchaseConfirmationCode")]
+        [Route("sendPurchaseConfirmationCodeAndGetPaymentId")]
         [HttpPost]
-        public object SendPurchaseConfirmationCode([FromBody] SendPurchaseConfirmationCodeRequestBody body)
+        public object SendPurchaseConfirmationCodeAndGetPaymentId([FromBody] SendPurchaseConfirmationCodeAndGetPaymentIdRequestBody body)
         {
-            return TicketPurchase.SendPurchaseConfirmationCode(body.CardNumber, body.CardExpirationDate, body.CVV, body.CardHolderName, body.EventId, body.CustomerEmail);
+            return TicketPurchase.SendPurchaseConfirmationCodeAndGetPaymentId(body.CardNumber, body.CardExpirationDate, body.CVV, body.CardHolderName, body.EventId, body.CustomerEmail);
+        }
+
+        [Route("confirmPurchase")]
+        [HttpPost]
+        public object ConfirmPurchase([FromBody] ConfirmPurchaseRequestBody body)
+        {
+            return TicketPurchase.ConfirmPurchase(body.AwaitingPaymentTicketId, body.ConfirmationCode);
         }
     }
 }
