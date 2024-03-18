@@ -29,7 +29,7 @@ namespace EvenueApi.Repositories
                 return null;
             }
 
-            Organizer organizer = context.GetOrganizers().Find(city => eventDto.City == city.Id);
+            Organizer organizer = context.GetOrganizers().Find(organizer => eventDto.Organizer == organizer.Id);
             City city = context.GetCities().Find(city => eventDto.City == city.Id);
             Event Event = new(eventDto.Id, eventDto.Name, eventDto.Description, eventDto.ImageUrl, eventDto.OldPrice, eventDto.Price, eventDto.StartDate, eventDto.EndDate, organizer, city, eventDto.ParticipantsMaxNumber);
 

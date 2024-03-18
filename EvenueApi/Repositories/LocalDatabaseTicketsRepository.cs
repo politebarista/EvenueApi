@@ -21,7 +21,7 @@ namespace EvenueApi.Repositories
 
         bool ITicketsRepository.CreateTicket(Ticket ticket)
         {
-            LocalDatabaseTicketDto ticketDto = new(Guid.NewGuid().ToString(), ticket.Event.Id, ticket.Customer.Email, ticket.PurchaseDate);
+            LocalDatabaseTicketDto ticketDto = new(ticket.Id, ticket.Event.Id, ticket.Customer.Email, ticket.PurchaseDate);
             return Context.AddTicket(ticketDto);
         }
 
