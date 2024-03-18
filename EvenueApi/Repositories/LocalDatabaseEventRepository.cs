@@ -3,9 +3,6 @@ using EvenueApi.Core.Repositories;
 using EvenueApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EvenueApi.Repositories
 {
@@ -18,31 +15,42 @@ namespace EvenueApi.Repositories
             throw new NotImplementedException();
         }
 
-        void IEventsRepository.DeleteEvent(Event Event)
+        Event IEventsRepository.GetEvent(string eventId)
         {
-            throw new NotImplementedException();
-        }
+            if (eventId == null) 
+            { 
+                return null; 
+            }
 
-        Event IEventsRepository.GetEvent(string id)
-        {
-            throw new NotImplementedException();
+            LocalDatabaseEventDto eventDto = context.GetEvents().Find((LocalDatabaseEventDto eventDto) => eventDto.Id == eventId);
+
+            if (eventDto == null)
+            {
+                return null;
+            }
+
+            Organizer organizer = context.GetOrganizers().Find(organizer => eventDto.Organizer == organizer.Id);
+            City city = context.GetCities().Find(city => eventDto.City == city.Id);
+            Event Event = new(eventDto.Id, eventDto.Name, eventDto.Description, eventDto.ImageUrl, eventDto.OldPrice, eventDto.Price, eventDto.StartDate, eventDto.EndDate, organizer, city, eventDto.ParticipantsMaxNumber);
+
+            return Event;
         }
 
         List<Event> IEventsRepository.GetEvents(string cityId)
         {
-            List<LocalDatabaseDtoEvent> dbEvents = context.GetEvents();
+            List<LocalDatabaseEventDto> dbEvents = context.GetEvents();
             List<Organizer> organizers = context.GetOrganizers();
             List<City> cities = context.GetCities();
             
             // I think the algorithm for selecting a city can be optimized
-            List<LocalDatabaseDtoEvent> dbEventsWithCity = cityId != null ? dbEvents.FindAll(dbEvent => dbEvent.City == cityId) : dbEvents;
+            List<LocalDatabaseEventDto> dbEventsWithCity = cityId != null ? dbEvents.FindAll(dbEvent => dbEvent.City == cityId) : dbEvents;
 
-            List<Event> events = new List<Event>();
-            foreach (LocalDatabaseDtoEvent dbEvent in dbEventsWithCity)
+            List<Event> events = new();
+            foreach (LocalDatabaseEventDto dbEvent in dbEventsWithCity)
             {
                 Organizer organizer = organizers.Find(organizer => dbEvent.Organizer == organizer.Id);
                 City city = cities.Find(city => dbEvent.City == city.Id);
-                events.Add(new Event(dbEvent.Id, dbEvent.Name, dbEvent.Description, dbEvent.ImageUrl, dbEvent.OldPrice, dbEvent.Price, dbEvent.StartDate, dbEvent.EndDate, organizer, city));
+                events.Add(new Event(dbEvent.Id, dbEvent.Name, dbEvent.Description, dbEvent.ImageUrl, dbEvent.OldPrice, dbEvent.Price, dbEvent.StartDate, dbEvent.EndDate, organizer, city, dbEvent.ParticipantsMaxNumber));
             }
 
             return events;

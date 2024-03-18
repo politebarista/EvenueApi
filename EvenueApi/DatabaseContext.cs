@@ -6,14 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// TODO: move to separate directory called something like "Data"
+// TODO: is it better to return DbSet and not List? Need to check the execution time
 namespace EvenueApi
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Organizer> Organizers { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<LocalDatabaseDtoEvent> Events { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        private DbSet<Organizer> Organizers { get; set; }
+        private DbSet<City> Cities { get; set; }
+        private DbSet<LocalDatabaseEventDto> Events { get; set; }
+        private DbSet<Customer> Customers { get; set; }
+        private DbSet<LocalDatabaseTicketDto> Tickets { get; set; }
 
         public DatabaseContext()
         {
@@ -41,7 +44,7 @@ namespace EvenueApi
 
         // EVENTS EVENTS EVENTS EVENTS EVENTS EVENTS
 
-        public List<LocalDatabaseDtoEvent> GetEvents()
+        public List<LocalDatabaseEventDto> GetEvents()
         {
             return Events.ToList();
         }
@@ -58,6 +61,27 @@ namespace EvenueApi
             try
             {
                 Customers.Add(customer);
+                SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // TICKETS TICKETS TICKETS TICKETS TICKETS TICKETS 
+
+        public List<LocalDatabaseTicketDto> GetTickets()
+        {
+            return Tickets.ToList();
+        }
+
+        public bool AddTicket(LocalDatabaseTicketDto ticket)
+        {
+            try
+            {
+                Tickets.Add(ticket);
                 SaveChanges();
                 return true;
             }
